@@ -1,0 +1,28 @@
+# nginx configuration by winginx.com
+
+location / {
+  if (!-e $request_filename){
+    rewrite ^(.*)$ /index.php break;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/app/(.*)$ /index.php;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/vendor/(.*)$ /index.php;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/runtime/(.*)$ /index.php;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/plugins/(.*)(.php|.sql)$ /index.php;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/package/(.*)$ /index.php;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/backup/(.*)$ /index.php;
+  }
+  if ($query_string ~ "^(.*)$"){
+    rewrite ^/upload/protect/(.*)$ /index.php;
+  }
+}
