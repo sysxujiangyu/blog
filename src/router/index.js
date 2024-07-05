@@ -39,8 +39,8 @@ for (const key in modulesFiles) {
 }
 // 创建路由
 let router = createRouter({
-	history: createWebHistory(),
-	// history: createWebHashHistory(),
+	// history: createWebHistory(),
+	history: createWebHashHistory(),
 	routes: constantRoutes,
 });
 
