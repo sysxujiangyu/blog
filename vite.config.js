@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig,loadEnv } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
-
+import generateCNAMEPlugin from './vite-plugin-generate-cname';
 // https://vitejs.dev/config/
 export default defineConfig(({
   mode
@@ -17,6 +17,10 @@ export default defineConfig(({
 			// 解决 `import { ref , reactive ..... } from 'vue'` 大量引入的问题
 			AutoImport({
 				imports: ['vue', 'vue-router'],
+			}),
+			// 生成 CNAMEW 文件
+			generateCNAMEPlugin({
+				content: 'blog.xujiangyu.com', // 替换为你的域名
 			}),
 		],
     // 反向代理解决跨域问题
