@@ -49,18 +49,6 @@ import { css } from "@codemirror/lang-css";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import generatePage from '@/utils/generatePage.js';
-const gtouchstart = (e) => {
-  isMove.value = true
-}
-const gtouchmove = (e) => {
-  if(isMove.value){
-    codeBoxWidth.value = e.clientX - 43
-  }
-  console.log(e.clientX, 'this is gtouchmove')
-}
-const gtouchend = (e) => {
-  isMove.value = false
-}
 const props = defineProps({
   htmlCode: String,
   cssCode: String,
@@ -147,21 +135,24 @@ const iframeLoad = () =>{
   var iframe = document.getElementById('output');
   var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
   _iframe = iframeWin.document;
+  Run();
 }
 const Run = () => {
   // const newHtml = generatePage(_htmlCode.value, _cssCode.value, _jsCode.value);
   // outputs.value = encodeURIComponent(newHtml);
   var codehtml = props.htmlCode;
-  var codecss = "<style>" + _cssCode.value + "</style>";
+  var codecss = "<style>*{max-width:100vw;}" + _cssCode.value + "</style>";
   var codejs = "<script>" + _jsCode.value + "<script>";
   _iframe["open"]();
   _iframe["write"](codecss + codehtml + codejs);
   _iframe["close"]();
 }
+
 </script>
 <style lang="scss" scoped>
+
+$mW: 40px;
 .code-editor-box{
-  $mW: 40px;
   $cw:var(--code-box-width);
   width:100%;
   height:100vh;
@@ -196,7 +187,6 @@ const Run = () => {
   }
   .code-box{
     width:$cw;
-    min-width: 100px;
     height:100%;
     background:#000;
     .item{
@@ -226,7 +216,6 @@ const Run = () => {
 
   .output-box{
     width:calc(100% - $mW - var(--code-box-width));
-    // width: calc($mW + var(--code-box-width));
     height:100%;
     overflow: hidden;
     background: #111;
@@ -239,10 +228,11 @@ const Run = () => {
     .bar:hover{
       cursor:col-resize;
     }
-    #output{
+    iframe{
       width:calc(100% - 6px);
-      height:100%;
       border:0;
+      height:100vh;
+      overflow: auto;
     }
   }
   
@@ -253,7 +243,11 @@ const Run = () => {
       display: block;
       overflow-y: scroll;
   }
-  .code-box,.output-box{
+  .code-box{
+    width:calc(100% - $mW)!important;
+    min-width:calc(100% - $mW)!important;
+  }
+  .output-box{
     min-width:100%;
   }
   .menu,.code-box,.output-box{
@@ -262,9 +256,9 @@ const Run = () => {
   .bar{
     display: hidden;
   }
-  #output{
+  iframe{
     width:100%;
-    height:100%;
+    height:var(--iframe-height);
     border:0;
     padding: 10px;
   }
