@@ -1,6 +1,6 @@
 // generate-page.js
 export default function generatePage(html, css, js) {
-    return `
+	return `
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -8,6 +8,7 @@ export default function generatePage(html, css, js) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Generated Page</title>
         <style>
+				*{max-width:100vw;}
           ${css}
         </style>
       </head>
@@ -19,5 +20,4 @@ export default function generatePage(html, css, js) {
       </body>
       </html>
     `;
-  }
-  
+}
